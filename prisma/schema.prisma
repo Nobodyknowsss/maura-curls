@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model user {
+  /// uid mirrors auth.users.id, kept in sync by triggers in
+  /// prisma/sql/sync-auth-users.sql. No default — value always comes from auth.
+  uid        String   @id @db.Uuid
+  email      String   @unique
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  role       String   @default("user")
+}
